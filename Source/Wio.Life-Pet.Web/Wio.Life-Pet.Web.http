@@ -1,0 +1,6 @@
+@Wio.Life_Pet.Web_HostAddress = http://localhost:5231
+
+GET {{Wio.Life_Pet.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,7 @@
+﻿services:
+  wio.life-pet.web:
+    image: wio.life-pet.web
+    build:
+      context: .
+      dockerfile: Source/Wio.Life-Pet.Web/Dockerfile
+

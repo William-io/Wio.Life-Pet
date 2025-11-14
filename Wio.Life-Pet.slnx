@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+  </Folder>
+  <Project Path="Source\Wio.Life-Pet.Abstractions\Wio.Life-Pet.Abstractions.csproj" Type="Classic C#" />
+  <Project Path="Source\Wio.Life-Pet.Application\Wio.Life-Pet.Application.csproj" Type="Classic C#" />
+  <Project Path="Source\Wio.Life-Pet.Repositories\Wio.Life-Pet.Repositories.csproj" Type="Classic C#" />
+  <Project Path="Source\Wio.Life-Pet.Services\Wio.Life-Pet.Services.csproj" Type="Classic C#" />
+  <Project Path="Source\Wio.Life-Pet.Transfers\Wio.Life-Pet.Transfers.csproj" Type="Classic C#" />
+  <Project Path="Source\Wio.Life-Pet.Web\Wio.Life-Pet.Web.csproj" Type="Classic C#" />
+</Solution>

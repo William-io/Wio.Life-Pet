@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Wio.Life_Pet.Web</RootNamespace>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wio.Life-Pet.Abstractions\Wio.Life-Pet.Abstractions.csproj" />
+      <ProjectReference Include="..\Wio.Life-Pet.Application\Wio.Life-Pet.Application.csproj" />
+      <ProjectReference Include="..\Wio.Life-Pet.Repositories\Wio.Life-Pet.Repositories.csproj" />
+      <ProjectReference Include="..\Wio.Life-Pet.Services\Wio.Life-Pet.Services.csproj" />
+      <ProjectReference Include="..\Wio.Life-Pet.Transfers\Wio.Life-Pet.Transfers.csproj" />
+    </ItemGroup>
+
+</Project>
