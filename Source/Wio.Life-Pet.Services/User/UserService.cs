@@ -1,5 +1,6 @@
 ﻿using Wio.Life_Pet.Abstraction.IRepository;
 using Wio.Life_Pet.Abstraction.IServices;
+using Wio.Life_Pet.Transfer.Auth;
 using Wio.Life_Pet.Transfer.Common;
 using Wio.Life_Pet.Transfer.User;
 
@@ -24,5 +25,10 @@ public class UserService : IUserService
     public async Task<Result<int>> Delete(UserDeleteRequest id)
     {
         return await _userRepository.Delete(id);
+    }
+
+    public async Task<AuthResponse> Login(LoginRequest request)
+    {
+        return await _userRepository.Login(request);
     }
 }

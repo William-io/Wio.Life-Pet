@@ -1,3 +1,6 @@
 namespace Wio.Life_Pet.Transfer.Auth;
 
-public record TokenResponse();
+public class TokenResponse
+{
+    public string Token { get; set; } = null!;
+}
