@@ -1,4 +1,5 @@
 using Wio.Life_Pet.Repository;
+using Wio.Life_Pet.Services.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Initialize database BEFORE configuring HTTP pipeline
+using (var scope = app.Services.CreateScope())
+{
+    var dbInitService = scope.ServiceProvider.GetRequiredService<DatabaseInitializationService>();
+    await dbInitService.InitializeAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

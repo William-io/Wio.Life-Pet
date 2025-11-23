@@ -4,4 +4,20 @@
     build:
       context: .
       dockerfile: Source/Wio.Life-Pet.Web/Dockerfile
+    depends_on:
+      - sqlserver
+      
+  sqlserver:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1q2w3i8l@&%
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./docker/sql-scripts:/docker-entrypoint-initdb.d
+      - sqlserver_data:/var/opt/mssql
+      
+volumes:
+  sqlserver_data:
 

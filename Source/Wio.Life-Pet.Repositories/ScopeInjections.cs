@@ -6,6 +6,7 @@ using Wio.Life_Pet.Abstraction.IServices;
 using Wio.Life_Pet.Application.User;
 using Wio.Life_Pet.Repository.User;
 using Wio.Life_Pet.Services.User;
+using Wio.Life_Pet.Services.Database;
 
 namespace Wio.Life_Pet.Repository;
 
@@ -33,5 +34,8 @@ public static class ScopeInjections
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserApplication, UserApplication>();
         services.AddScoped<IUserService, UserService>();
+        
+        // Serviço de inicialização do banco de dados
+        services.AddScoped<DatabaseInitializationService>();
     }
 }
