@@ -12,9 +12,9 @@ public class UserApplication : IUserApplication
     
     public UserApplication(IUserService userService) => _userService = userService;
     
-    public async Task<Result<UserListResponse>> GetAll()
+    public async Task<Result<UserListPaginatedResponse>> GetAll(UserListRequest request)
     {
-        return await _userService.GetAll();
+        return await _userService.GetAll(request);
     }
 
     public async Task<Result<int>> Create(UserCreateRequest request)

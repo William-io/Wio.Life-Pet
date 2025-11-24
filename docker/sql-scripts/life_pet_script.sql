@@ -25,7 +25,10 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE SP_LIST_USERS
+CREATE OR ALTER PROCEDURE SP_LIST_USERS(
+    @p_index INT = 0,
+    @p_limit INT = 10
+)
 AS
 BEGIN
     SELECT
@@ -36,8 +39,10 @@ BEGIN
         username AS Username,
         password_hash AS PasswordHash,
         role_id AS RoleId,
-        state AS State
-    FROM tbl_users;
+        state AS State,
+        (SELECT COUNT(*) FROM tbl_users WHERE state = 1) AS TotalRegisters
+    FROM tbl_users WHERE state = 1
+    ORDER BY id OFFSET @p_index ROWS FETCH NEXT @p_limit ROWS ONLY;
 END
 GO
 
@@ -98,6 +103,32 @@ BEGIN
         @p_username      = 'admin',
         @p_password_hash = '3?OfC',
         @p_role_id       = 1;
+END
+GO
+
+-- Create second user only if it doesn't exist
+IF NOT EXISTS (SELECT 1 FROM tbl_users WHERE username = 'user2')
+BEGIN
+    EXEC SP_CREATE_USER
+        @p_first_name    = 'Maria',
+        @p_last_name     = 'Silva',
+        @p_email         = 'maria.silva@example.com',
+        @p_username      = 'user2',
+        @p_password_hash = 'senha123',
+        @p_role_id       = 2;
+END
+GO
+
+-- Create third user only if it doesn't exist
+IF NOT EXISTS (SELECT 1 FROM tbl_users WHERE username = 'user3')
+BEGIN
+    EXEC SP_CREATE_USER
+        @p_first_name    = 'João',
+        @p_last_name     = 'Santos',
+        @p_email         = 'joao.santos@example.com',
+        @p_username      = 'user3',
+        @p_password_hash = 'minhasenha',
+        @p_role_id       = 2;
 END
 GO
     

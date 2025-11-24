@@ -25,14 +25,36 @@ public class UserRepository : IUserRepository
         this._configuration = configuration;
     }
 
-    public async Task<Result<UserListResponse>> GetAll()
+    public async Task<Result<UserListPaginatedResponse>> GetAll(UserListRequest request)
     {
         await using var connection = new SqlConnection(_connectionString);
 
-        var users = (await connection.QueryFirstAsync<UserListResponse>(
-            "SP_LIST_USERS", commandType: CommandType.StoredProcedure));
+        var parameters = new DynamicParameters();
+        parameters.Add("@p_index", request.Index);
+        parameters.Add("@p_limit", request.Limit);
+        
+        var results = await connection.QueryAsync<dynamic>(
+            "SP_LIST_USERS", parameters, commandType: CommandType.StoredProcedure);
 
-        return users;
+        var resultList = results.ToList();
+        
+        if (resultList.Count == 0)
+            return new UserListPaginatedResponse(Enumerable.Empty<UserItemResponse>(), 0);
+        
+        int totalCount = (int)resultList.First().TotalRegisters;
+        
+        var userItems = resultList.Select(r => new UserItemResponse(
+            Id: (int)r.Id,
+            FirstName: (string)r.FirstName,
+            LastName: (string)r.LastName,
+            Email: (string)r.Email,
+            Username: (string)r.Username,
+            RoleId: (int)r.RoleId,
+            State: (int)r.State
+        ));
+
+        var response = new UserListPaginatedResponse(userItems, totalCount);
+        return response;
     }
 
     public async Task<Result<int>> Create(UserCreateRequest request)

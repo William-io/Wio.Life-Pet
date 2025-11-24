@@ -27,8 +27,8 @@ public class DatabaseInitializationService
             _logger.LogInformation("Testando conexão com o SQL Server existente...");
             await TestConnectionAsync();
             
-            // Executar script SQL
-            _logger.LogInformation("Executando script SQL...");
+            // Executar script SQL sempre (forçado)
+            _logger.LogInformation("Executando script SQL (FORÇADO)...");
             await ExecuteSqlScriptAsync();
             
             _logger.LogInformation("Banco de dados inicializado com sucesso!");

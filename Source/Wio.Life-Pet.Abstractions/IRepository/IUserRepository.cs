@@ -6,7 +6,7 @@ namespace Wio.Life_Pet.Abstraction.IRepository;
 
 public interface IUserRepository
 {
-   public Task<Result<UserListResponse>> GetAll();
+   public Task<Result<UserListPaginatedResponse>> GetAll(UserListRequest request);
    public Task<Result<int>> Create(UserCreateRequest request);
    public Task<Result<int>> Delete(UserDeleteRequest id);
    

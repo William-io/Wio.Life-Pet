@@ -5,19 +5,19 @@ using Wio.Life_Pet.Transfer.User;
 namespace Wio.Life_Pet.Web.Controllers.Users;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/user")]
 public class UserController(IUserApplication userApplication) : ControllerBase
 {
-    [HttpGet]
-    [Route("List")]
-    public async Task<IActionResult> ListUsersAsync()
+    [HttpPost]
+    [Route("list")]
+    public async Task<IActionResult> ListUsersAsync([FromBody] UserListRequest request)
     {
-        var result = await userApplication.GetAll();
+        var result = await userApplication.GetAll(request);
         return Ok(result.Value);
     }
     
     [HttpPost]
-    [Route("Create")]
+    [Route("create")]
     public async Task<IActionResult> CreateUserAsync([FromBody] UserCreateRequest request)
     {
         var result = await userApplication.Create(request);
@@ -25,7 +25,7 @@ public class UserController(IUserApplication userApplication) : ControllerBase
     }
 
     [HttpDelete]
-    [Route("Delete")]
+    [Route("delete")]
     public async Task<IActionResult> DeleteUserAsync([FromBody] UserDeleteRequest request)
     {
         var result = await userApplication.Delete(request);
