@@ -4,7 +4,7 @@ namespace Wio.Life_Pet.Transfer.Common;
 
 public class Result
 {
-    public Result(bool isSuccess, Error error)
+    public Result(bool isSuccess, Error error, string message = "")
     {
         if (isSuccess && error != Error.None)
             throw new InvalidOperationException();
@@ -14,6 +14,7 @@ public class Result
             
         IsSuccess = isSuccess;
         Error = error;
+        Message = message;
     }
     
     public bool IsSuccess { get; }
@@ -22,13 +23,15 @@ public class Result
     
     public Error Error { get; }
     
-    public static Result Success() => new(true, Error.None);
+    public string Message { get; }
     
-    public static Result Failure(Error error) => new(false, error);
+    public static Result Success(string message = "") => new(true, Error.None, message);
     
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+    public static Result Failure(Error error, string message = "") => new(false, error, message);
     
-    public static Result<TValue> Failure<TValue>(Error error) => new(default, false, error);
+    public static Result<TValue> Success<TValue>(TValue value, string message = "") => new(value, true, Error.None, message);
+    
+    public static Result<TValue> Failure<TValue>(Error error, string message = "") => new(default, false, error, message);
     
     public static Result<TValue> Create<TValue>(TValue? value) =>
         value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
@@ -38,8 +41,8 @@ public sealed class Result<TValue> : Result
 {
     private readonly TValue? _value;
 
-    public Result(TValue? value, bool isSuccess, Error error)
-        : base(isSuccess, error)
+    public Result(TValue? value, bool isSuccess, Error error, string message = "")
+        : base(isSuccess, error, message)
     {
         _value = value;
     }
@@ -47,7 +50,7 @@ public sealed class Result<TValue> : Result
     [NotNull]
     public TValue Value => IsSuccess
         ? _value!
-        : throw new InvalidOperationException("Não é possível acessar o valor de um resultado de falha..");
+        : throw new InvalidOperationException($"{Error.Name} - {Message}");
 
     public static implicit operator Result<TValue>(TValue? value) => Create(value);
 }

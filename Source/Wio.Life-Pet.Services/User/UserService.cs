@@ -12,7 +12,7 @@ public class UserService : IUserService
     
     public UserService(IUserRepository userRepository) => _userRepository = userRepository;
     
-    public async Task<Result<UserListPaginatedResponse>> GetAll(UserListRequest request)
+    public async Task<Result<object>> GetAll(UserListRequest request)
     {
         return await _userRepository.GetAll(request);
     }
